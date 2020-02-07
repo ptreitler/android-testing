@@ -1,9 +1,14 @@
+@file:Suppress("IncorrectScope")
+
 package com.example.android.architecture.blueprints.todoapp.statistics
 
 import com.example.android.architecture.blueprints.todoapp.data.Task
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.Matchers.closeTo
 import org.junit.Assert.*
 import org.junit.Test
 
+@Suppress("IncorrectScope")
 class StatisticsUtilsTest {
     @Test
     fun getActiveAndCompletedTasksWithOnlyOneActiveTask() {
@@ -13,8 +18,8 @@ class StatisticsUtilsTest {
                 isCompleted = false
         ))
         val (activeTasksPercent, completedTasksPercent) = getActiveAndCompletedStats(tasks)
-        assertEquals(100f, activeTasksPercent)
-        assertEquals(0f, completedTasksPercent)
+        assertThat(activeTasksPercent, `is`(100f))
+        assertThat(completedTasksPercent, `is`(0f))
     }
 
     @Test
@@ -24,22 +29,22 @@ class StatisticsUtilsTest {
                 Task("C", "C", false)
         )
         val (activeTasksPercent, completedTasksPercent) = getActiveAndCompletedStats(tasks)
-        assertEquals(33.33f, activeTasksPercent, 0.01f)
-        assertEquals(66.66f, completedTasksPercent, 0.01f)
+        assertThat(activeTasksPercent.toDouble(), closeTo(33.33, 0.01))
+        assertThat(completedTasksPercent.toDouble(), closeTo(66.66, 0.01))
     }
 
     @Test
     fun getActiveAndCompletedTasksWithEmptyList() {
         val tasks = emptyList<Task>()
         val (activeTasksPercent, completedTasksPercent) = getActiveAndCompletedStats(tasks)
-        assertEquals(0f, activeTasksPercent)
-        assertEquals(0f, completedTasksPercent)
+        assertThat(activeTasksPercent, `is`(0f))
+        assertThat(completedTasksPercent, `is`(0f))
     }
 
     @Test
     fun getActiveAndCompletedTasksWithNull() {
         val (activeTasksPercent, completedTasksPercent) = getActiveAndCompletedStats(null)
-        assertEquals(0f, activeTasksPercent)
-        assertEquals(0f, completedTasksPercent)
+        assertThat(activeTasksPercent, `is`(0f))
+        assertThat(completedTasksPercent, `is`(0f))
     }
 }
