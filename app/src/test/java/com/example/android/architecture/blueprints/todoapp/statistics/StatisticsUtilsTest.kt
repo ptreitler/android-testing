@@ -3,9 +3,7 @@
 package com.example.android.architecture.blueprints.todoapp.statistics
 
 import com.example.android.architecture.blueprints.todoapp.data.Task
-import org.hamcrest.CoreMatchers.`is`
-import org.hamcrest.Matchers.closeTo
-import org.junit.Assert.*
+import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
 @Suppress("IncorrectScope")
@@ -18,8 +16,8 @@ class StatisticsUtilsTest {
                 isCompleted = false
         ))
         val (activeTasksPercent, completedTasksPercent) = getActiveAndCompletedStats(tasks)
-        assertThat(activeTasksPercent, `is`(100f))
-        assertThat(completedTasksPercent, `is`(0f))
+        assertThat(activeTasksPercent).isEqualTo(100f)
+        assertThat(completedTasksPercent).isEqualTo(0f)
     }
 
     @Test
@@ -29,22 +27,22 @@ class StatisticsUtilsTest {
                 Task("C", "C", false)
         )
         val (activeTasksPercent, completedTasksPercent) = getActiveAndCompletedStats(tasks)
-        assertThat(activeTasksPercent.toDouble(), closeTo(33.33, 0.01))
-        assertThat(completedTasksPercent.toDouble(), closeTo(66.66, 0.01))
+        assertThat(activeTasksPercent).isWithin(0.01f).of(33.33f)
+        assertThat(completedTasksPercent).isWithin(0.01f).of(66.66f)
     }
 
     @Test
     fun getActiveAndCompletedTasksWithEmptyList() {
         val tasks = emptyList<Task>()
         val (activeTasksPercent, completedTasksPercent) = getActiveAndCompletedStats(tasks)
-        assertThat(activeTasksPercent, `is`(0f))
-        assertThat(completedTasksPercent, `is`(0f))
+        assertThat(activeTasksPercent).isEqualTo(0f)
+        assertThat(completedTasksPercent).isEqualTo(0f)
     }
 
     @Test
     fun getActiveAndCompletedTasksWithNull() {
         val (activeTasksPercent, completedTasksPercent) = getActiveAndCompletedStats(null)
-        assertThat(activeTasksPercent, `is`(0f))
-        assertThat(completedTasksPercent, `is`(0f))
+        assertThat(activeTasksPercent).isEqualTo(0f)
+        assertThat(completedTasksPercent).isEqualTo(0f)
     }
 }
