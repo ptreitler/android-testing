@@ -64,7 +64,7 @@ class FakeTestRepository : TasksRepository {
         tasksServiceData.remove(taskId)
     }
 
-    private fun addTasks(vararg tasks: Task) {
+    internal fun addTasks(vararg tasks: Task) {
         tasks.forEach { tasksServiceData[it.id] = it }
         runBlocking { refreshTasks() }
     }
