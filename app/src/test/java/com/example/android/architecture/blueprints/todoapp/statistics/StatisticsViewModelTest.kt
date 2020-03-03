@@ -42,4 +42,17 @@ class StatisticsViewModelTest {
 
         assertThat(statisticsViewModel.dataLoading.getOrAwaitValue()).isFalse()
     }
+
+    @Test
+    fun loadStatisticsWhenTasksAreUnavailable_callErrorToDisplay() {
+        // GIVEN an error in the repository (e.g. no network connection)
+        repository.setReturnError(true)
+
+        // WHEN refreshing the view model
+        statisticsViewModel.refresh()
+
+        // THEN an error message is shown
+        assertThat(statisticsViewModel.error.getOrAwaitValue()).isTrue()
+        assertThat(statisticsViewModel.empty.getOrAwaitValue()).isTrue()
+    }
 }
