@@ -26,39 +26,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @LargeTest
-class TasksActivityTest {
-    private lateinit var repository: TasksRepository
-
-    @Before
-    fun init() {
-        repository = ServiceLocator.provideTasksRepository(getApplicationContext())
-        runBlocking {
-            repository.deleteAllTasks()
-        }
-    }
-
-    private val dataBindingIdlingResource = DataBindingIdlingResource()
-
-    @Before
-    fun registerIdlingResource() {
-        IdlingRegistry.getInstance().register(
-                EspressoIdlingResource.countingIdlingResource,
-                dataBindingIdlingResource
-        )
-    }
-
-    @After
-    fun unregisterIdlingResource() {
-        IdlingRegistry.getInstance().unregister(
-                EspressoIdlingResource.countingIdlingResource,
-                dataBindingIdlingResource
-        )
-    }
-
-    @After
-    fun reset() {
-        ServiceLocator.resetRepository()
-    }
+class TasksActivityTest : BaseEndToEndTest() {
 
     @Test
     fun editTask() = runBlocking {
